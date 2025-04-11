@@ -17,7 +17,7 @@ runs:
         go-version: "stable"
     - name: install binary
       shell: bash
-      run: go install github.com/pakohan/cooklang-epub
+      run: go install github.com/pakohan/cooklang-epub@latest
     - name: generate epub
       shell: bash
       run: cooklang-epub --folder ${{ inputs.folder }} --output ./recipes.epub
