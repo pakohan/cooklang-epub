@@ -1,0 +1,17 @@
+<ol>
+{{- range .}}
+    <li>
+    {{range .}}
+        {{- if eq (getType .) "ingredient"}}
+        {{- .Name}}
+        {{- else if eq (getType .) "text"}}
+        {{- .Value}}
+        {{- else if eq (getType .) "timer"}}
+        {{- .Quantity}} {{.Unit}}
+        {{- else if eq (getType .) "cookware"}}
+        {{- .Name}}
+        {{- end}}
+    {{- end}}
+    </li>
+{{- end}}
+</ol>
