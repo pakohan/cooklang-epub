@@ -11,14 +11,18 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-go@v5
+    - name: setup go
+      uses: actions/setup-go@v5
       with:
         go-version: "stable"
-    - name: Generate ePUB
+    - name: install binary
       shell: bash
-      run: go run . --folder ${{ inputs.folder }} --output ./recipes.epub
-    - uses: softprops/action-gh-release@v2
+      run: go install github.com/pakohan/cooklang-epub
+    - name: generate epub
+      shell: bash
+      run: cooklang-epub --folder ${{ inputs.folder }} --output ./recipes.epub
+    - name: upload epub
+      uses: softprops/action-gh-release@v2
       id: create_release
       with:
         files: ./recipes.epub
