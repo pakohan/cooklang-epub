@@ -16,7 +16,7 @@ jobs:
       - name: install binary
         shell: bash
         run: go build .
-      - name: upload epub
+      - name: upload binary
         uses: softprops/action-gh-release@v2
         id: create_release
         with:

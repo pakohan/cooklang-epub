@@ -16,6 +16,9 @@ runs:
         repository: "pakohan/cooklang-epub"
         latest: true
         fileName: "cooklang-epub"
+    - name: make executable
+      shell: bash
+      run: chmod +x cooklang-epub
     - name: generate epub
       shell: bash
       run: ./cooklang-epub --folder ${{ inputs.folder }} --output ./recipes.epub
