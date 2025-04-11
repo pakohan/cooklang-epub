@@ -1,0 +1,23 @@
+name: Generate binary
+on:
+  push:
+    tags:
+      - "v*.*.*"
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+      - name: install binary
+        shell: bash
+        run: go build .
+      - name: upload epub
+        uses: softprops/action-gh-release@v2
+        id: create_release
+        with:
+          files: ./cooklang-epub
