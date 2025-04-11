@@ -13,6 +13,7 @@ runs:
   steps:
     - uses: robinraju/release-downloader@v1
       with:
+        repository: "pakohan/cooklang-epub"
         latest: true
         fileName: "cooklang-epub"
     - name: generate epub
