@@ -1,0 +1,23 @@
+name: "Generate Cooklang ePUB"
+description: "Generate a Cooklang ePUB from a repository containing Cooklang recipe files"
+inputs:
+  folder:
+    description: "folder containing Cooklang recipe files"
+    default: "."
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-go@v5
+      with:
+        go-version: "stable"
+    - name: Generate ePUB
+      run: go run . --folder ${{ inputs.folder }} --output ./recipes.epub
+    - uses: softprops/action-gh-release@v2
+      id: create_release
+      with:
+        files: ./recipes.epub
