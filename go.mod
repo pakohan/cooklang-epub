@@ -1,8 +1,6 @@
 module github.com/pakohan/cooklang-epub
 
-go 1.24.1
-
-replace github.com/aquilax/cooklang-go => /Users/mogli/Developer/cooklang-go
+go 1.24
 
 require (
 	github.com/aquilax/cooklang-go v0.2.0
