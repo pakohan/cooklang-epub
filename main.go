@@ -12,19 +12,15 @@ func main() {
 	templateFolder := flag.String("template-files", "template", "glob pattern to find the template files")
 	flag.Parse()
 
-	fmt.Println("folder:", folder)
-	fmt.Println("output:", outputFile)
-	fmt.Println("template-files:", templateFolder)
+	fmt.Println("folder:", *folder)
+	fmt.Println("output:", *outputFile)
+	fmt.Println("template-files:", *templateFolder)
 
 	tmpl, err := template.New("").Funcs(template.FuncMap{
 		"getType": getType,
 	}).ParseGlob(*templateFolder)
 	if err != nil {
 		panic(err)
-	}
-
-	for _, t := range tmpl.Templates() {
-		fmt.Println("template:", t.Name())
 	}
 
 	recipes, err := ParseFolder(*folder)
