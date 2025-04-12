@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"errors"
 	"fmt"
 	"html/template"
@@ -19,17 +20,12 @@ func createBook(tmpl *template.Template, recipes []cooklang.RecipeV2, file strin
 		return err
 	}
 
-	internalCSSPath, err := e.AddCSS("style.css", "")
-	if err != nil {
-		return err
-	}
-
 	s, err := getTemplateString(internalTemplates, "cover.tmpl", recipes)
 	if err != nil {
 		return err
 	}
 
-	_, err = e.AddSection(s, "Cover", "", internalCSSPath)
+	_, err = e.AddSection(s, "Cover", "", "")
 	if err != nil {
 		return err
 	}
