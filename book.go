@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"html/template"
 
@@ -17,6 +18,10 @@ func createBook(tmpl *template.Template, recipes []cooklang.RecipeV2, file strin
 
 	e.SetAuthor("Patrick Kohan")
 
+	if len(recipes) == 0 {
+		return errors.New("no recipes found")
+	}
+
 	for _, r := range recipes {
 		buf := &bytes.Buffer{}
 		err := tmpl.ExecuteTemplate(buf, "recipe.tmpl", r)
@@ -30,5 +35,6 @@ func createBook(tmpl *template.Template, recipes []cooklang.RecipeV2, file strin
 		}
 	}
 
+	fmt.Printf("writing file to '%s'\n", file)
 	return e.Write(file)
 }

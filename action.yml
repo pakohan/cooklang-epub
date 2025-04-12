@@ -21,4 +21,4 @@ runs:
       run: chmod +x ${{ runner.temp }}/cooklang-epub
     - name: generate epub
       shell: bash
-      run: ${{ runner.temp }}/cooklang-epub --folder ${{ inputs.folder }} --output ./recipes.epub --template-files ${{ inputs.template_glob }}
+      run: ${{ runner.temp }}/cooklang-epub --folder ${{ inputs.folder }} --output ./recipes.epub --template-files '${{ inputs.template_glob }}'

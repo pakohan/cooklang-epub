@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"html/template"
 )
 
@@ -11,6 +12,10 @@ func main() {
 	templateFolder := flag.String("template-files", "template", "glob pattern to find the template files")
 	flag.Parse()
 
+	fmt.Println("folder:", folder)
+	fmt.Println("output:", outputFile)
+	fmt.Println("template-files:", templateFolder)
+
 	tmpl, err := template.New("").Funcs(template.FuncMap{
 		"getType": getType,
 	}).ParseGlob(*templateFolder)
@@ -19,7 +24,7 @@ func main() {
 	}
 
 	for _, t := range tmpl.Templates() {
-		println(t.Name())
+		fmt.Println("template:", t.Name())
 	}
 
 	recipes, err := ParseFolder(*folder)
