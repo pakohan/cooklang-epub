@@ -18,6 +18,10 @@ func main() {
 		panic(err)
 	}
 
+	for _, t := range tmpl.Templates() {
+		println(t.Name())
+	}
+
 	recipes, err := ParseFolder(*folder)
 	if err != nil {
 		panic(err)
