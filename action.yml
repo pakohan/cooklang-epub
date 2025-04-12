@@ -15,7 +15,7 @@ runs:
         repository: "pakohan/cooklang-epub"
         latest: true
         fileName: "cooklang-epub"
-        out-file-path: "${{ runner.temp }}/cooklang-epub"
+        out-file-path: "${{ runner.temp }}"
     - name: make executable
       shell: bash
       run: chmod +x ${{ runner.temp }}/cooklang-epub
