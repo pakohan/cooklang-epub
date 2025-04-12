@@ -1,13 +1,15 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"html/template"
 
 	"github.com/aquilax/cooklang-go"
 	"github.com/go-shiori/go-epub"
 )
 
-func createBook(file string, recipes []cooklang.RecipeV2) error {
+func createBook(tmpl *template.Template, recipes []cooklang.RecipeV2, file string) error {
 	e, err := epub.NewEpub("Recipes")
 	if err != nil {
 		return err
@@ -16,12 +18,13 @@ func createBook(file string, recipes []cooklang.RecipeV2) error {
 	e.SetAuthor("Patrick Kohan")
 
 	for _, r := range recipes {
-		s, err := executeTemplateRecipe(r)
+		buf := &bytes.Buffer{}
+		err := tmpl.ExecuteTemplate(buf, "recipe.tmpl", r)
 		if err != nil {
 			return err
 		}
 
-		_, err = e.AddSection(s, fmt.Sprint(r.Metadata["title"]), "", "")
+		_, err = e.AddSection(buf.String(), fmt.Sprint(r.Metadata["title"]), "", "")
 		if err != nil {
 			return err
 		}

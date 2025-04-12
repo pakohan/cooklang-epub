@@ -1,13 +1,12 @@
 name: "Generate Cooklang ePUB"
-description: "Generate a Cooklang ePUB from a repository containing Cooklang recipe files"
+description: "Generate a Cooklang ePUB from a repository containing Cooklang recipe files and templates"
 inputs:
   folder:
     description: "folder containing Cooklang recipe files"
     default: "."
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-number }}
+  template_glob:
+    description: "glob pattern for finding templates"
+    default: "templates/*.tmpl"
 runs:
   using: "composite"
   steps:
@@ -16,14 +15,10 @@ runs:
         repository: "pakohan/cooklang-epub"
         latest: true
         fileName: "cooklang-epub"
+        out-file-path: "${{ runner.temp }}/cooklang-epub"
     - name: make executable
       shell: bash
-      run: chmod +x cooklang-epub
+      run: chmod +x ${{ runner.temp }}/cooklang-epub
     - name: generate epub
       shell: bash
-      run: ./cooklang-epub --folder ${{ inputs.folder }} --output ./recipes.epub
-    - name: upload epub
-      uses: softprops/action-gh-release@v2
-      id: create_release
-      with:
-        files: ./recipes.epub
+      run: ${{ runner.temp }}/cooklang-epub --folder ${{ inputs.folder }} --output ./recipes.epub --template-files ${{ inputs.template_glob }}
