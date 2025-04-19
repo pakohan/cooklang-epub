@@ -3,32 +3,33 @@ package main
 import (
 	"flag"
 	"fmt"
-	"html/template"
+
+	"github.com/pakohan/cooklang-epub/book/generate"
+	"github.com/pakohan/cooklang-epub/book/recipe"
+	"github.com/pakohan/cooklang-epub/book/tmpl"
 )
 
 func main() {
 	folder := flag.String("folder", ".", "Path to the folder containing recipes")
 	outputFile := flag.String("output", "recipes.epub", "Path to the output EPUB file")
-	templateFolder := flag.String("template-files", "template", "glob pattern to find the template files")
+	templateFolder := flag.String("template-folder", "template", "folder that contains the template files")
 	flag.Parse()
 
 	fmt.Println("folder:", *folder)
 	fmt.Println("output:", *outputFile)
-	fmt.Println("template-files:", *templateFolder)
+	fmt.Println("template-folder:", *templateFolder)
 
-	tmpl, err := template.New("").Funcs(template.FuncMap{
-		"getType": getType,
-	}).ParseGlob(*templateFolder)
+	book, err := recipe.ParseRecipeFolder(*folder)
 	if err != nil {
 		panic(err)
 	}
 
-	recipes, err := ParseFolder(*folder)
+	tc, tmpl, err := tmpl.ParseTemplateFolder(*templateFolder)
 	if err != nil {
 		panic(err)
 	}
 
-	err = createBook(tmpl, recipes, *outputFile)
+	err = generate.Book(book, tc.Sections, tmpl, *outputFile)
 	if err != nil {
 		panic(err)
 	}

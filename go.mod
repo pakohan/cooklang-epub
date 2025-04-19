@@ -6,7 +6,6 @@ require (
 	github.com/aquilax/cooklang-go v0.2.0
 	github.com/go-shiori/go-epub v1.2.1
 	github.com/goccy/go-yaml v1.17.1
-	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
@@ -14,4 +13,5 @@ require (
 	github.com/gofrs/uuid/v5 v5.0.0 // indirect
 	github.com/vincent-petithory/dataurl v1.0.0 // indirect
 	golang.org/x/net v0.19.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
